@@ -18,10 +18,7 @@
             margin-top: 10px;
         }
 
-        .btn-epure:hover {
-            opacity: 0.8;
-        }
-
+        .btn-epure:hover { opacity: 0.8; }
         .btn-green { background-color: #4CAF50; }
         .btn-red { background-color: #F44336; }
         .btn-yellow { background-color: #FFEB3B; }
@@ -34,12 +31,14 @@
         .device-list {
             width: 30%;
             padding: 20px;
-            border-right: 2px solid #ccc;
+            border-right: 2px solid #F44336;
         }
 
         .device-details {
             width: 70%;
             padding: 20px;
+            border-left: 2px solid #F44336;
+
         }
 
         .device-item {
@@ -48,28 +47,12 @@
             background-color: #f0f0f0;
             border-radius: 10px;
             cursor: pointer;
+            border: 1px solid #F44336;
         }
 
-        .device-item:hover {
-            background-color: #ddd;
-        }
-
-        .error-message {
-            color: red;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        .shake {
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
+        .device-item:hover { background-color: #ddd; }
+        h3 {
+            color: #F44336; /* Couleur rouge sur les titres */
         }
     </style>
 </head>
@@ -77,10 +60,14 @@
 
     <!-- Bandeau de navigation -->
     <div class="header bg-gray-800 text-white p-4 text-center">
-        <a href="Site.html" class="text-white">Retour à l'accueil</a> | 
+        <a href="pageAccueilDev.html" class="text-white">Retour à l'accueil</a> | 
         <a href="connexion.html" class="text-white">Connexion</a> | 
         <a href="inscription.html" class="text-white">Inscription</a>
     </div>
+
+    <header>
+        <h1 class="text-center text-3xl font-bold mt-4" style="color: #F44336;">Bienvenue dans le Salon !</h1>
+    </header>
 
     <!-- Contenu principal -->
     <div class="container">
