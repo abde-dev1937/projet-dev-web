@@ -149,12 +149,31 @@
   </footer>
 
   <script>
-    const dataPlats = {
-      spaghetti: {
-        ingredients: ["Pâtes", "Viande hachée", "Tomates", "Oignons", "Ail", "Huile d'olive", "Sel", "Poivre"],
-        recette: ["Préparer les ingrédients", "Faire revenir les oignons et l’ail", "Cuire la viande", "Ajouter les tomates", "Cuire les pâtes et servir"]
-      }
-    };
+      const dataPlats = {
+    spaghetti: {
+      ingredients: ["Pâtes", "Viande hachée", "Tomates", "Oignons", "Ail", "Huile d'olive", "Sel", "Poivre"],
+      recette: ["Préparer les ingrédients", "Faire revenir les oignons et l’ail", "Cuire la viande", "Ajouter les tomates", "Cuire les pâtes et servir"]
+    },
+    ratatouille: {
+      ingredients: ["Aubergines", "Courgettes", "Poivrons", "Tomates", "Oignons", "Ail", "Herbes de Provence", "Huile d'olive"],
+      recette: ["Couper les légumes en morceaux", "Faire revenir les oignons et l’ail", "Ajouter les légumes et laisser mijoter", "Assaisonner et servir"]
+    },
+    steak: {
+      ingredients: ["Steak de bœuf", "Pommes de terre", "Beurre", "Sel", "Poivre", "Huile d'olive"],
+      recette: ["Éplucher et couper les pommes de terre", "Faire cuire les frites dans l'huile", "Cuire le steak selon la cuisson désirée", "Servir chaud"]
+    },
+    couscous: {
+      ingredients: ["Semoule de blé", "Légumes (carottes, courgettes, navets)", "Viande (agneau ou poulet)", "Pois chiches", "Épices (ras el hanout, curcuma, paprika)", "Huile d'olive"],
+      recette: ["Préparer la semoule", "Faire revenir la viande avec les épices", "Ajouter les légumes et laisser mijoter", "Servir avec la semoule"]
+    },
+    tartiflette: {
+      ingredients: ["Pommes de terre", "Lardons", "Oignons", "Crème fraîche", "Reblochon", "Sel", "Poivre"],
+      recette: ["Éplucher et couper les pommes de terre", "Faire revenir les oignons et lardons", "Alterner couches de pommes de terre et fromage dans un plat", "Enfourner à 200°C jusqu’à gratinage"]
+    }
+  };
+
+
+
 
     function afficherPlat() {
       const plat = document.getElementById("plats").value;
