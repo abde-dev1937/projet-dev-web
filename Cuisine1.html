@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <title>Bienvenue dans la cuisine !</title>
+  
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -105,8 +107,16 @@
   </style>
 </head>
 <body>
+  <body class="bg-gray-100">
+
+    <!-- Bandeau de navigation -->
+    <div class="header bg-gray-800 text-white p-4 text-center">
+        <a href="pageAccueilDev.html" class="text-white">Retour à l'accueil</a> | 
+        <a href="connexion.html" class="text-white">Connexion</a> | 
+        <a href="inscription.html" class="text-white">Inscription</a>
+    </div>
   <header>
-    <h1>Bienvenue dans la cuisine !</h1>
+    <h1 class="text-center text-3xl font-bold mt-4">Bienvenue dans la cuisine !</h1>
   </header>
 
   <div class="main-container">
