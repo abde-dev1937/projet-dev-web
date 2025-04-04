@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Binevenue dans le cuisine !</title>
+  <title>Bienvenue dans la cuisine !</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,28 +22,6 @@
 
     header h1 {
       color: #a0522d;
-    }
-
-    .buttons-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px;
-    }
-
-    button {
-      background-color: #d2691e;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #a0522d;
     }
 
     .main-container {
@@ -69,12 +47,13 @@
       font-weight: bold;
     }
 
-    .menu-gauche select {
+    .menu-gauche select, .menu-gauche button {
       width: 100%;
       padding: 10px;
       font-size: 16px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      margin-bottom: 10px;
     }
 
     .contenu-droite {
@@ -106,6 +85,22 @@
       margin-top: 40px;
       font-size: 14px;
       color: #888;
+      text-align: center;
+    }
+
+    button {
+      background-color: #d2691e;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #a0522d;
     }
   </style>
 </head>
@@ -113,7 +108,6 @@
   <header>
     <h1>Bienvenue dans la cuisine !</h1>
   </header>
-
 
   <div class="main-container">
     <div class="menu-gauche">
@@ -126,6 +120,16 @@
         <option value="couscous">Couscous</option>
         <option value="tartiflette">Tartiflette</option>
       </select>
+
+      <label for="appareils">Appareils connectés :</label>
+      <select id="appareils" onchange="afficherActions()">
+        <option value="default">-- Choisissez un appareil --</option>
+        <option value="airfryer">Airfryer</option>
+        <option value="four">Four</option>
+        <option value="refrigerateur">Réfrigérateur</option>
+      </select>
+
+      <div id="actions"></div>
     </div>
 
     <div class="contenu-droite">
@@ -147,89 +151,8 @@
   <script>
     const dataPlats = {
       spaghetti: {
-        ingredients: [
-          "Pâtes",
-          "Viande hachée",
-          "Tomates",
-          "Oignons",
-          "Ail",
-          "Huile d'olive",
-          "Sel",
-          "Poivre"
-        ],
-        recette: [
-          "Préparer les ingrédients : laver, éplucher, couper si nécessaire.",
-          "Faire revenir les oignons et l’ail dans l’huile d’olive.",
-          "Ajouter la viande hachée et cuire jusqu’à coloration.",
-          "Incorporer les tomates, saler, poivrer, laisser mijoter 20 minutes.",
-          "Cuire les pâtes selon les instructions, puis servir avec la sauce."
-        ]
-      },
-      steak: {
-        ingredients: [
-          "Steak",
-          "Pommes de terre",
-          "Sel",
-          "Poivre",
-          "Beurre",
-          "Huile"
-        ],
-        recette: [
-          "Éplucher et couper les pommes de terre en bâtonnets.",
-          "Faire chauffer l’huile et frire les pommes de terre jusqu’à ce qu’elles soient dorées.",
-          "Assaisonner les frites avec du sel.",
-          "Saler et poivrer le steak selon le goût.",
-          "Faire cuire le steak dans du beurre à la cuisson désirée."
-        ]
-      },
-      ratatouille: {
-        ingredients: [
-          "Aubergines",
-          "Courgettes",
-          "Poivrons",
-          "Tomates",
-          "Oignons",
-          "Herbes de Provence"
-        ],
-        recette: [
-          "Laver et couper tous les légumes en dés.",
-          "Faire revenir les oignons avec un peu d’huile.",
-          "Ajouter les légumes un à un en les faisant revenir chacun quelques minutes.",
-          "Ajouter les tomates en dernier, puis assaisonner avec les herbes.",
-          "Laisser mijoter à feu doux pendant 30 minutes."
-        ]
-      },
-      couscous: {
-        ingredients: [
-          "Semoule",
-          "Pois chiches",
-          "Légumes variés",
-          "Viande (agneau, poulet)",
-          "Épices orientales"
-        ],
-        recette: [
-          "Faire revenir la viande dans une grande marmite.",
-          "Ajouter les légumes coupés et les pois chiches.",
-          "Couvrir d’eau et ajouter les épices.",
-          "Laisser cuire à feu doux pendant environ 45 minutes.",
-          "Préparer la semoule selon les instructions et servir avec le bouillon."
-        ]
-      },
-      tartiflette: {
-        ingredients: [
-          "Pommes de terre",
-          "Reblochon",
-          "Lardons",
-          "Oignons",
-          "Crème fraîche"
-        ],
-        recette: [
-          "Éplucher et couper les pommes de terre en rondelles.",
-          "Faire revenir les lardons et les oignons.",
-          "Cuire les pommes de terre à la vapeur ou à l’eau.",
-          "Assembler dans un plat avec crème, lardons, oignons, et reblochon coupé en deux.",
-          "Enfourner à 200°C pendant 20 à 25 minutes jusqu’à ce que ce soit gratiné."
-        ]
+        ingredients: ["Pâtes", "Viande hachée", "Tomates", "Oignons", "Ail", "Huile d'olive", "Sel", "Poivre"],
+        recette: ["Préparer les ingrédients", "Faire revenir les oignons et l’ail", "Cuire la viande", "Ajouter les tomates", "Cuire les pâtes et servir"]
       }
     };
 
@@ -247,6 +170,27 @@
         ingredientsDiv.innerHTML = `<h2>Ingrédients</h2><ul>${ingList}</ul>`;
         recetteDiv.innerHTML = `<h2>Recette</h2><ol>${stepsList}</ol>`;
       }
+    }
+
+    function afficherActions() {
+      const appareil = document.getElementById("appareils").value;
+      const actionsDiv = document.getElementById("actions");
+
+      let actions = {
+        airfryer: ["Préchauffer (200°C)", "Démarrer cuisson", "Arrêter"],
+        four: ["Préchauffer (180°C)", "Cuisson (30 min)", "Éteindre"],
+        refrigerateur: ["Régler température (4°C)", "Mode éco", "Dégivrage auto"]
+      };
+
+      if (appareil === "default") {
+        actionsDiv.innerHTML = "";
+      } else {
+        actionsDiv.innerHTML = actions[appareil].map(action => `<button onclick="executerAction('${action}')">${action}</button>`).join("<br>");
+      }
+    }
+
+    function executerAction(action) {
+      alert("Action exécutée : " + action);
     }
   </script>
 </body>
