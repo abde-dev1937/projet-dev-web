@@ -98,6 +98,7 @@
     </div>
 
     <script>
+        let aspiratorInterval = null;
         let isConnected = true; // L'utilisateur est-il connecté ? (changer cette valeur pour simuler la connexion)
         
         const devices = {
@@ -143,14 +144,19 @@
 
             // Télévision
             if (deviceKey === "tv") {
-                deviceInfoHtml += `<p>Chaîne actuelle: ${device.channel}</p>`;
+                deviceInfoHtml += `<p>Chaîne actuelle: <span id="tv-channel">${device.channel}</span></p>`;
                 deviceActionsHtml += `
-                    <button class="btn-epure btn-green" onclick="changeChannel('${deviceKey}')">Changer de chaîne</button>
-                    <div>
+                    <div class="flex space-x-2">
+                        <button class="btn-epure btn-red" onclick="decreaseChannel('${deviceKey}')">−</button>
+                        <button class="btn-epure btn-red" onclick="increaseChannel('${deviceKey}')">+</button>
+                    </div>
+                    <div class="mt-2">
                         <label for="volume">Volume:</label>
                         <input type="range" id="volume" name="volume" min="0" max="100" value="${device.volume}" onchange="changeVolume('${deviceKey}', this.value)">
                     </div>
                 `;
+
+
             }
 
             // Aspirateur
@@ -160,10 +166,12 @@
                         <label for="aspirator-time">Durée (minutes):</label>
                         <input type="number" id="aspirator-time" min="1" value="10">
                     </div>
-                    <button class="btn-epure btn-red" onclick="startAspirator('${deviceKey}')">Lancer Aspirateur</button>
+                    <button class="btn-epure btn-green" onclick="startAspirator('${deviceKey}')">Allumer l'aspirateur</button>
+                    <button class="btn-epure btn-red" onclick="stopAspirator('${deviceKey}')">Éteindre l'aspirateur</button>
                     <div id="aspirator-timer"></div>
                 `;
             }
+
 
             // Enceinte
             if (deviceKey === "enceinte") {
@@ -192,11 +200,7 @@
                 `;
             }
 
-            // Bouton Marche/Arrêt
-            deviceActionsHtml += `
-                <button class="btn-epure btn-red" onclick="toggleDevice('${deviceKey}')">Marche/Arrêt</button>
-            `;
-
+            
             document.getElementById("device-info").innerHTML = deviceInfoHtml;
             document.getElementById("device-actions").innerHTML = deviceActionsHtml;
             document.getElementById("error-message").innerText = "";
@@ -219,7 +223,46 @@
             }
             devices[deviceKey].channel = (devices[deviceKey].channel % 10) + 1;
             alert("Chaîne changée pour " + devices[deviceKey].channel);
+            
+            // Met à jour l'affichage du texte de chaîne
+            const channelElement = document.getElementById("tv-channel");
+            if (channelElement) {
+                channelElement.innerText = devices[deviceKey].channel;
+            }
         }
+
+        function increaseChannel(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].channel = (devices[deviceKey].channel % 10) + 1;
+            document.getElementById("tv-channel").innerText = devices[deviceKey].channel;
+        }
+
+        function decreaseChannel(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].channel = devices[deviceKey].channel === 1 ? 10 : devices[deviceKey].channel - 1;
+            document.getElementById("tv-channel").innerText = devices[deviceKey].channel;
+        }
+
+
+
+        function stopAspirator(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].status = "Off";
+            devices[deviceKey].timeLeft = 0;
+            clearInterval(aspiratorInterval);
+            document.getElementById("aspirator-timer").innerText = "";
+            alert("Aspirateur éteint.");
+        }
+
 
         function startAspirator(deviceKey) {
             if (!isConnected) {
@@ -234,9 +277,11 @@
         }
 
         function startTimer(deviceKey) {
-            const timerInterval = setInterval(() => {
+            clearInterval(aspiratorInterval); // On arrête l'ancien si jamais
+            aspiratorInterval = setInterval(() => {
                 if (devices[deviceKey].timeLeft <= 0) {
-                    clearInterval(timerInterval);
+                    clearInterval(aspiratorInterval);
+                    devices[deviceKey].status = "Off";
                     alert("Aspirateur terminé.");
                 } else {
                     devices[deviceKey].timeLeft--;
@@ -244,6 +289,7 @@
                 }
             }, 1000);
         }
+
 
         function changeIntensity(deviceKey, value) {
             if (!isConnected) {
