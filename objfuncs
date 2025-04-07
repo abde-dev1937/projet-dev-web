@@ -1,0 +1,70 @@
+Télévision (TV) - soumis a restriction par points
+
+Contrôle : Volume (barre de progression)
+            Luminosité (barre de progression)
+            chaine (numero)
+            HDMI input channel (numero)
+            enregistrer (choix chaine, heure debut, heure fin)
+            
+
+Chauffage
+
+Contrôle : Température (barre de progression)
+            mode (eco, classique, puissant)
+            programmation(mode, temp, heure debut, heure fin)
+
+Lumière (Ampoule)
+
+Contrôle : Intensité lumineuse (barre de progression)
+            couleur(choix couleur html5)
+            mode (eco, classique)
+
+Enceinte (audio) -  soumis a restriction par points
+
+Contrôle : Volume (barre de progression)
+            Pause (bouton cliquable)
+            prochaine lecture(bouton cliquable)
+            precedente lecture(bouton cliquable)
+            type de sortie audio(bass, studio, jazz, hip hop, ect)
+            pairing bluetooth (bouton cliquable)
+
+Aspirateur
+
+Contrôle : Durée de fonctionnement (entrée numérique pour minutes)
+          mode(ménagz rapide, normal, ménage en profondeur)
+            programmation(date debut, date fin, mode)
+
+Sèche-linge - limité par niveau user
+
+Contrôle : mode(synthétique, coton, fragile, ect, ect)
+          Cycle(pret a porter, pret a repasser, ect, ect)
+          programmation(h debut, h fin, mode, cycle)
+
+Lave-vaisselle - limité par niveau user
+
+Contrôle : temps
+            température
+            type de cycle
+            programmation
+
+Tondeuse - limité par niveau user
+
+Contrôle : nb milimetres
+          temps de fonctionnement
+          mode safe(si gens dans jardin)
+
+Console - soumis a restriction par points
+
+Contrôle : arret programmé (heure fin)
+          volume
+
+Plaque chauffante - limité par niveau user
+
+Contrôle : temperature
+          mode eco
+
+Alexa/Google Home
+
+Contrôle : donner instruction (zone texte)
+            volume
+          
