@@ -30,6 +30,15 @@ points int,
 statut varchar(15), --simple intermediaire avancé administrateur
 role varchar(15) ); -- adulte enfant voisin adolescent ...
 
+
+CREATE TABLE IF NOT EXISTS platform_rules (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    object_name VARCHAR(255) NOT NULL,
+    points_per_hour INT NOT NULL,
+    required_role VARCHAR(255) NOT NULL
+);
+
+
 CREATE TABLE demandes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pseudonyme VARCHAR(100),
