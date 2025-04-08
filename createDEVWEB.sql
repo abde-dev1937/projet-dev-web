@@ -10,6 +10,7 @@ drop table if exists laveLinge;
 drop table if exists chauffeEau;
 drop table if exists arrosage;
 drop table if exists salle;
+drop table if exists demande
 
 set FOREIGN_KEY_CHECKS = 1;
 
@@ -28,6 +29,18 @@ mot_de_passe varchar(15),
 points int,
 statut varchar(15), --simple intermediaire avancé administrateur
 role varchar(15) ); -- adulte enfant voisin adolescent ...
+
+CREATE TABLE demandes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pseudonyme VARCHAR(100),
+    age INT,
+    gender VARCHAR(20),
+    rs VARCHAR(255),
+    email VARCHAR(255),
+    last_name VARCHAR(100),
+    first_name VARCHAR(100),
+    date_demande TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 create table thermostat(
 id_thermo int primary key,
