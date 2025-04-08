@@ -25,7 +25,9 @@ email varchar(20),
 last_name varchar(15),
 first_name varchar(15),
 mot_de_passe varchar(15),
-points int);
+points int,
+statut varchar(15), --simple intermediaire avancé administrateur
+role varchar(15) ); -- adulte enfant voisin adolescent ...
 
 create table thermostat(
 id_thermo int primary key,
