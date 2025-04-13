@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ajouter un Type d’Objet</title>
+  <link rel="stylesheet" href="hassoul.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 700px;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #333;
+    }
+
+    .field-row, .action-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    label {
+      flex: 1;
+    }
+
+    input[type="text"], select {
+      flex: 2;
+      padding: 5px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 15px;
+      font-size: 16px;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Ajouter un nouveau type d’objet</h1>
+  </header>
+
+  <div class="content">
+    <form id="newDeviceTypeForm">
+      <label>Nom du type d’objet :</label>
+      <input type="text" id="deviceTypeName" required />
+
+<div class="field-group">
+  <label for="conso_en">Consommation énergétique par heure:</label>
+  <input type="number" id="conso_en" required>
+</div>
+
+<div class="field-group">
+  <label for="type_energie">Type d’énergie :</label>
+  <select id="type_energie" required>
+    <option value="électrique">Électrique</option>
+    <option value="gaz">Gaz</option>
+    <option value="eau">Eau</option>
+  </select>
+</div>
+      <h3>Champs :</h3>
+      <div id="fieldsContainer"></div>
+      <button type="button" onclick="addField()">Ajouter un champ</button>
+
+      <h3>Actions associées :</h3>
+      <div id="actionsContainer"></div>
+      <button type="button" onclick="addAction()">Ajouter une action</button>
+
+      <br><br>
+      <button type="submit">Enregistrer</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 Maison Design - Administration
+  </footer>
+
+  <script>
+    function addField() {
+      const container = document.getElementById('fieldsContainer');
+      const div = document.createElement('div');
+      div.className = "field-row";
+      div.innerHTML = `
+        <input type="text" placeholder="Nom du champ" class="field-name" required />
+        <select class="input-type">
+          <option value="text">Texte</option>
+          <option value="number">Nombre</option>
+          <option value="color">Couleur</option>
+          <option value="checkbox">Checkbox</option>
+          <option value="range">Range</option>
+        </select>
+        <label><input type="checkbox" class="editable" /> Modifiable</label>
+        <label><input type="checkbox" class="asked" /> À demander au début</label>
+      `;
+      container.appendChild(div);
+    }
+
+    function addAction() {
+      const container = document.getElementById('actionsContainer');
+      const div = document.createElement('div');
+      div.className = "action-row";
+      div.innerHTML = `<input type="text" placeholder="Nom de l'action" class="action-name" required />`;
+      container.appendChild(div);
+    }
+
+document.getElementById('newDeviceTypeForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById('deviceTypeName').value.trim();
+  const fields = [];
+  const actions = [];
+
+  // Champs personnalisés
+  document.querySelectorAll('.field-row').forEach(row => {
+    const fieldName = row.querySelector('.field-name').value;
+    const inputType = row.querySelector('.input-type').value;
+    const editable = row.querySelector('.editable').checked;
+    const asked = row.querySelector('.asked').checked;
+
+    fields.push({
+      name: fieldName,
+      inputType: inputType,
+      editable: editable,
+      asked: asked
+    });
+  });
+
+attributes.push({
+  name: "type_energie",
+  inputType: "text",
+  editable: false,
+  asked: false,
+  default: typeEnergie
+});
+
+const conso = document.getElementById("conso_en").value;
+const typeEnergie = document.getElementById("type_energie").value;
+
+  // Champ automatique pour la consommation d'énergie
+  fields.push({
+    name: "conso_en",
+    inputType: "number",
+    editable: false,
+    asked: false,
+    default : parseFloat(conso)
+  });
+
+  // Actions
+  document.querySelectorAll('.action-row').forEach(row => {
+    const actionName = row.querySelector('.action-name').value;
+    if (actionName) actions.push(actionName);
+  });
+
+  const data = {
+    type: name,
+    fields: fields,
+    actions: actions
+  };
+
+  fetch('personnaliser_obj.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      alert(`Type "${name}" sauvegardé avec succès !`);
+      location.reload();
+    } else {
+      alert("Erreur : " + result.error);
+    }
+  })
+  .catch(err => {
+    console.error("Erreur lors de l'envoi :", err);
+    alert("Erreur réseau");
+  });
+});
+
+
+  </script>
+</body>
+</html>

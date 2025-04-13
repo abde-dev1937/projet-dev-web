@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Statistiques - Maison Connectée</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+  <div class="bg-gray-800 text-white p-4 text-center">
+    <a href="index.html" class="text-white">← Retour au Salon</a>
+  </div>
+
+  <header>
+    <h1 class="text-center text-3xl font-bold my-6 text-red-500">Statistiques d'utilisation</h1>
+  </header>
+
+  <main class="max-w-6xl mx-auto bg-white p-6 shadow rounded">
+    <div id="stats-container" class="overflow-x-auto">
+      <table class="min-w-full table-auto border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200 text-left">
+            <th class="px-4 py-2">Appareil</th>
+            <th class="px-4 py-2">Utilisateur</th>
+            <th class="px-4 py-2">Action</th>
+            <th class="px-4 py-2">Valeur</th>
+            <th class="px-4 py-2">Durée</th>
+            <th class="px-4 py-2">Date</th>
+          </tr>
+        </thead>
+        <tbody id="stats-body"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    async function loadStats() {
+      const response = await fetch('get_stats.php');
+      const data = await response.json();
+      const body = document.getElementById('stats-body');
+
+      data.forEach(stat => {
+        const row = document.createElement('tr');
+        row.className = "border-t";
+
+        row.innerHTML = `
+          <td class="px-4 py-2">${stat.device_id}</td>
+          <td class="px-4 py-2">${stat.utilisateur_id}</td>
+          <td class="px-4 py-2 text-blue-600 font-medium">${stat.type_action}</td>
+          <td class="px-4 py-2">${stat.valeur || '-'}</td>
+          <td class="px-4 py-2">${stat.duree_minutes ? stat.duree_minutes + " min" : '-'}</td>
+          <td class="px-4 py-2 text-sm text-gray-500">${stat.timestamp}</td>
+        `;
+        body.appendChild(row);
+      });
+    }
+
+    loadStats();
+  </script>
+
+</body>
+</html>

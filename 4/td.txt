@@ -1,0 +1,5 @@
+tester sous sql la page salon
+faire pareil avec cuisine et jardin ajt obj jardin
+gérer les authorisation dobjets et écoulement des points sur le temps
+préciser sujet->info:recherche avec filtre
+exploiter stats

@@ -1,0 +1,357 @@
+{
+  "lumiere_connectee": [
+    {
+      "name": "intensite",
+      "editable": true,
+      "inputType": "range",
+      "min": 0,
+      "max": 100
+    },
+    {
+      "name": "couleur",
+      "editable": true,
+      "inputType": "color"
+    },
+    {
+      "name": "allume",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "connexion",
+      "editable": false,
+      "inputType": "text"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "chauffage_connecte": [
+    {
+      "name": "temperature_actuelle",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "temperature_cible",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "mode",
+      "editable": true,
+      "inputType": "select",
+      "options": [
+        "chauffage",
+        "refroidissement"
+      ]
+    },
+    {
+      "name": "connexion",
+      "editable": false,
+      "inputType": "text"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "tv_connectee": [
+    {
+      "name": "volume",
+      "editable": true,
+      "inputType": "range",
+      "min": 0,
+      "max": 100
+    },
+    {
+      "name": "chaine_actuelle",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "source_tv",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "allume",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "connexion",
+      "editable": false,
+      "inputType": "text"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "assistant_voix": [
+    {
+      "name": "nom",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "type_assistant",
+      "editable": true,
+      "inputType": "select",
+      "options": [
+        "Alexa",
+        "Google Home"
+      ]
+    },
+    {
+      "name": "connexion",
+      "editable": false,
+      "inputType": "text"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "enceinte_connectee": [
+    {
+      "name": "volume",
+      "editable": true,
+      "inputType": "range",
+      "min": 0,
+      "max": 100
+    },
+    {
+      "name": "bluetooth",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "allume",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "connexion",
+      "editable": false,
+      "inputType": "text"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "gestion_eau": [
+    {
+      "name": "consommation_eau",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "mode_fonctionnement",
+      "editable": true,
+      "inputType": "select",
+      "options": [
+        "éteint",
+        "en fonctionnement"
+      ]
+    },
+    {
+      "name": "dernier_usage",
+      "editable": false,
+      "inputType": "datetime-local"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "gestion_chauffage": [
+    {
+      "name": "temperature_actuelle",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "temperature_cible",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "mode_fonctionnement",
+      "editable": true,
+      "inputType": "select",
+      "options": [
+        "chauffage",
+        "arrêt"
+      ]
+    },
+    {
+      "name": "dernier_ajustement",
+      "editable": false,
+      "inputType": "datetime-local"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "ouverture_portes": [
+    {
+      "name": "porte",
+      "editable": false,
+      "inputType": "text"
+    },
+    {
+      "name": "etat",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "connexion",
+      "editable": false,
+      "inputType": "text"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "machine_laver": [
+    {
+      "name": "programme",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "temps_restant",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "fonctionnement",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "seche_linge": [
+    {
+      "name": "programme",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "temps_restant",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "fonctionnement",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "lave_vaisselle": [
+    {
+      "name": "programme",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "temps_restant",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "taux_remplissage",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "fonctionnement",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "aspirateur": [
+    {
+      "name": "programme",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "temps_restant",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "fonctionnement",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "tondeuse": [
+    {
+      "name": "programme",
+      "editable": true,
+      "inputType": "text"
+    },
+    {
+      "name": "fonctionnement",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ],
+  "plaque_chauffante": [
+    {
+      "name": "temperature",
+      "editable": true,
+      "inputType": "number"
+    },
+    {
+      "name": "fonctionnement",
+      "editable": true,
+      "inputType": "checkbox"
+    },
+    {
+      "name": "id_connection",
+      "editable": false,
+      "inputType": "text"
+    }
+  ]
+}
