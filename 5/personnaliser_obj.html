@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajout d'un type d'objet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f4f4f4;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 {
+      color: #e53935;
+      text-align: center;
+    }
+    .field-group {
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    input[type="text"],
+    select {
+      width: 100%;
+      padding: 5px;
+    }
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+    .btn {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #45a049;
+    }
+    .add-btn {
+      background: #2196F3;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Ajouter un nouveau type d'objet</h2>
+
+<form method="POST" action="personnaliser_obj.php">
+  <label for="type">Nom du type d'objet (ex: cafetiere, climatiseur)</label>
+  <input type="text" name="type" required>
+<tr>
+ <label>Consommation Energie</label>
+  <td><input type="hidden" name="inputType[]" value="number"></td>
+  <td><input type="hidden" name="editable[]" value=""></td>
+  <td><input type="hidden" name="asked[]" value=""></td>
+  <td><input type="text" name="actions[]" value=""></td>
+</tr>
+
+
+  <label><input type="checkbox" name="timer"> Utilise un minuteur (timer)</label>
+  <label for="default_room">Salle par défaut</label>
+<select name="default_room" required>
+  <option value="salon">Salon</option>
+  <option value="cuisine">Cuisine</option>
+  <option value="jardin">Jardin</option>
+</select>
+
+  <div id="fields-container">
+    <div class="field-group">
+      <label>Nom du champ</label>
+      <input type="text" name="name[]" required>
+
+      <label>Type d'entrée</label>
+      <select name="inputType[]">
+        <option value="text">Texte</option>
+        <option value="number">Nombre</option>
+        <option value="range">Range (curseur)</option>
+        <option value="color">Couleur</option>
+        <option value="checkbox">Checkbox</option>
+        <option value="select">Select</option>
+      </select>
+
+      <label><input type="checkbox" name="editable[]" value="0"> Modifiable ?</label>
+      <label><input type="checkbox" name="asked[]" value="0"> Demandé à la création ?</label>
+
+      <label>Actions associées (séparées par des virgules)</label>
+      <input type="text" name="actions[]" placeholder="ex: allumage,eteignage">
+    </div>
+  </div>
+
+  <button type="button" class="btn add-btn" onclick="addField()">Ajouter un champ</button>
+  <br><br>
+  <button type="submit" class="btn"> Enregistrer l'objet</button>
+</form>
+
+<script>
+let fieldIndex = 1;
+
+function addField() {
+  const container = document.getElementById('fields-container');
+  const group = document.createElement('div');
+  group.className = 'field-group';
+
+  group.innerHTML = `
+    <label>Nom du champ</label>
+    <input type="text" name="name[]" required>
+
+    <label>Type d'entrée</label>
+    <select name="inputType[]">
+      <option value="text">Texte</option>
+      <option value="number">Nombre</option>
+      <option value="range">Range (curseur)</option>
+      <option value="color">Couleur</option>
+      <option value="checkbox">Checkbox</option>
+      <option value="select">Select</option>
+    </select>
+
+    <label><input type="checkbox" name="editable[]" value="${fieldIndex}"> Modifiable ?</label>
+    <label><input type="checkbox" name="asked[]" value="${fieldIndex}"> Demandé à la création ?</label>
+
+    <label>Actions associées (séparées par des virgules)</label>
+    <input type="text" name="actions[]" placeholder="ex: changement_volume,changement_couleur">
+  `;
+  container.appendChild(group);
+  fieldIndex++;
+}
+</script>
+
+</body>
+</html>

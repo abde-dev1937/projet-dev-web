@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon - Appareils</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Styles */
+        .btn-epure {
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .btn-epure:hover { opacity: 0.8; }
+        .btn-green { background-color: #4CAF50; }
+        .btn-red { background-color: #F44336; }
+        .btn-yellow { background-color: #FFEB3B; }
+
+        .container {
+            display: flex;
+            height: 80vh;
+        }
+
+        .device-list {
+            width: 30%;
+            padding: 20px;
+            border-right: 2px solid #F44336;
+        }
+
+        .device-details {
+            width: 70%;
+            padding: 20px;
+            border-left: 2px solid #F44336;
+
+        }
+
+        .device-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid #F44336;
+        }
+
+        .device-item:hover { background-color: #ddd; }
+        h3 {
+            color: #F44336; /* Couleur rouge sur les titres */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Bandeau de navigation -->
+    <div class="header bg-gray-800 text-white p-4 text-center">
+        <a href="pageAccueilDev.html" class="text-white">Retour à l'accueil</a> | 
+        <a href="connexion.html" class="text-white">Connexion</a> | 
+        <a href="inscription.html" class="text-white">Inscription</a>
+    </div>
+
+    <header>
+        <h1 class="text-center text-3xl font-bold mt-4" style="color: #F44336;">Bienvenue dans le Salon !</h1>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="container">
+
+        <!-- Liste des appareils à gauche -->
+        <div class="device-list">
+            <h3 class="text-2xl font-bold mb-4">Appareils</h3>
+            <div id="device-list">
+                <div class="device-item" onclick="showDeviceDetails('tv')">Télévision</div>
+                <div class="device-item" onclick="showDeviceDetails('aspirateur')">Aspirateur</div>
+                <div class="device-item" onclick="showDeviceDetails('enceinte')">Enceinte</div>
+                <div class="device-item" onclick="showDeviceDetails('ampoule')">Ampoule</div>
+            </div>
+        </div>
+
+        <!-- Détails de l'appareil sélectionné à droite -->
+        <div class="device-details">
+            <h3 id="device-name" class="text-2xl font-bold">Sélectionner un appareil</h3>
+            <div id="device-info">
+                <p>Veuillez sélectionner un appareil pour voir ses informations.</p>
+            </div>
+            <div id="device-actions" class="mt-4">
+                <!-- Les actions comme modifier volume ou autres -->
+            </div>
+            <div id="error-message" class="error-message"></div>
+        </div>
+
+    </div>
+
+    <script>
+        let aspiratorInterval = null;
+        let isConnected = true; // L'utilisateur est-il connecté ? (changer cette valeur pour simuler la connexion)
+        
+        const devices = {
+            tv: {
+                name: "Télévision",
+                type: "Électronique",
+                consumption: "100W",
+                channel: 1,
+                volume: 50,
+            },
+            aspirateur: {
+                name: "Aspirateur",
+                type: "Electroménager",
+                consumption: "1500W",
+                status: "Off",
+                timeLeft: 0, // Temps restant pour l'aspirateur
+            },
+            enceinte: {
+                name: "Enceinte",
+                type: "Audio",
+                consumption: "50W",
+                battery: 100,
+                volume: 60,
+            },
+            ampoule: {
+                name: "Ampoule",
+                type: "Éclairage",
+                consumption: "10W",
+                intensity: 80,
+                color: "white", // Couleur de l'ampoule
+            }
+        };
+
+        function showDeviceDetails(deviceKey) {
+            const device = devices[deviceKey];
+            document.getElementById("device-name").innerText = device.name;
+            let deviceInfoHtml = `
+                <p>Type: ${device.type}</p>
+                <p>Consommation: ${device.consumption}</p>
+            `;
+            
+            let deviceActionsHtml = "";
+
+            // Télévision
+            if (deviceKey === "tv") {
+                deviceInfoHtml += `<p>Chaîne actuelle: <span id="tv-channel">${device.channel}</span></p>`;
+                deviceActionsHtml += `
+                    <div class="flex space-x-2">
+                        <button class="btn-epure btn-red" onclick="decreaseChannel('${deviceKey}')">−</button>
+                        <button class="btn-epure btn-red" onclick="increaseChannel('${deviceKey}')">+</button>
+                    </div>
+                    <div class="mt-2">
+                        <label for="volume">Volume:</label>
+                        <input type="range" id="volume" name="volume" min="0" max="100" value="${device.volume}" onchange="changeVolume('${deviceKey}', this.value)">
+                    </div>
+                `;
+
+
+            }
+
+            // Aspirateur
+            if (deviceKey === "aspirateur") {
+                deviceActionsHtml += `
+                    <div>
+                        <label for="aspirator-time">Durée (minutes):</label>
+                        <input type="number" id="aspirator-time" min="1" value="10">
+                    </div>
+                    <button class="btn-epure btn-green" onclick="startAspirator('${deviceKey}')">Allumer l'aspirateur</button>
+                    <button class="btn-epure btn-red" onclick="stopAspirator('${deviceKey}')">Éteindre l'aspirateur</button>
+                    <div id="aspirator-timer"></div>
+                `;
+            }
+
+
+            // Enceinte
+            if (deviceKey === "enceinte") {
+                deviceInfoHtml += `<p>Batterie: ${device.battery}%</p>`;
+                deviceInfoHtml += `<p>Volume: ${device.volume}%</p>`;
+                deviceActionsHtml += `
+                    <div>
+                        <label for="volume">Volume:</label>
+                        <input type="range" id="volume" name="volume" min="0" max="100" value="${device.volume}" onchange="changeVolume('${deviceKey}', this.value)">
+                    </div>
+                `;
+            }
+
+            // Ampoule
+            if (deviceKey === "ampoule") {
+                deviceInfoHtml += `<p>Intensité: ${device.intensity}%</p>`;
+                deviceActionsHtml += `
+                    <div>
+                        <label for="intensity">Intensité:</label>
+                        <input type="range" id="intensity" min="0" max="100" value="${device.intensity}" onchange="changeIntensity('${deviceKey}', this.value)">
+                    </div>
+                    <div>
+                        <label for="color">Couleur:</label>
+                        <input type="color" id="color" value="#ffffff" onchange="changeColor('${deviceKey}', this.value)">
+                    </div>
+                `;
+            }
+
+            
+            document.getElementById("device-info").innerHTML = deviceInfoHtml;
+            document.getElementById("device-actions").innerHTML = deviceActionsHtml;
+            document.getElementById("error-message").innerText = "";
+        }
+
+        // Fonctions de contrôle des appareils
+        function changeVolume(deviceKey, value) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].volume = value;
+            alert("Volume changé pour " + devices[deviceKey].name + " à " + value);
+        }
+
+        function changeChannel(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].channel = (devices[deviceKey].channel % 10) + 1;
+            alert("Chaîne changée pour " + devices[deviceKey].channel);
+            
+            // Met à jour l'affichage du texte de chaîne
+            const channelElement = document.getElementById("tv-channel");
+            if (channelElement) {
+                channelElement.innerText = devices[deviceKey].channel;
+            }
+        }
+
+        function increaseChannel(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].channel = (devices[deviceKey].channel % 10) + 1;
+            document.getElementById("tv-channel").innerText = devices[deviceKey].channel;
+        }
+
+        function decreaseChannel(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].channel = devices[deviceKey].channel === 1 ? 10 : devices[deviceKey].channel - 1;
+            document.getElementById("tv-channel").innerText = devices[deviceKey].channel;
+        }
+
+
+
+        function stopAspirator(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].status = "Off";
+            devices[deviceKey].timeLeft = 0;
+            clearInterval(aspiratorInterval);
+            document.getElementById("aspirator-timer").innerText = "";
+            alert("Aspirateur éteint.");
+        }
+
+
+        function startAspirator(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            const time = document.getElementById("aspirator-time").value;
+            devices[deviceKey].timeLeft = time * 60; // Convertir en secondes
+            devices[deviceKey].status = "On";
+            alert("Aspirateur lancé pour " + time + " minutes.");
+            startTimer(deviceKey);
+        }
+
+        function startTimer(deviceKey) {
+            clearInterval(aspiratorInterval); // On arrête l'ancien si jamais
+            aspiratorInterval = setInterval(() => {
+                if (devices[deviceKey].timeLeft <= 0) {
+                    clearInterval(aspiratorInterval);
+                    devices[deviceKey].status = "Off";
+                    alert("Aspirateur terminé.");
+                } else {
+                    devices[deviceKey].timeLeft--;
+                    document.getElementById("aspirator-timer").innerText = "Temps restant: " + devices[deviceKey].timeLeft + " secondes";
+                }
+            }, 1000);
+        }
+
+
+        function changeIntensity(deviceKey, value) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].intensity = value;
+            alert("Intensité changée pour " + devices[deviceKey].name + " à " + value);
+        }
+
+        function changeColor(deviceKey, value) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            devices[deviceKey].color = value;
+            alert("Couleur changée pour " + devices[deviceKey].name + " à " + value);
+        }
+
+        function toggleDevice(deviceKey) {
+            if (!isConnected) {
+                displayError();
+                return;
+            }
+            const device = devices[deviceKey];
+            device.status = device.status === "Off" ? "On" : "Off";
+            alert(device.name + " est maintenant " + device.status);
+        }
+
+        function displayError() {
+            document.getElementById("error-message").innerText = "Vous devez être connecté pour utiliser les appareils.";
+            document.getElementById("device-list").classList.add("shake");
+        }
+    </script>
+</body>
+</html>

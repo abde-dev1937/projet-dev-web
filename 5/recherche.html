@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Recherche</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+  <h1 class="text-3xl font-bold text-center text-red-600 mb-6">🔎 Moteur de Recherche</h1>
+
+  <div class="max-w-xl mx-auto">
+    <input type="text" id="searchInput" placeholder="Rechercher un objet ou une statistique..." class="w-full p-3 border rounded mb-4">
+    <button onclick="recherche()" class="btn-epure btn-green w-full">Rechercher</button>
+
+    <ul id="resultsList" class="mt-6 space-y-2"></ul>
+  </div>
+
+  <script>
+    function recherche() {
+      const input = document.getElementById("searchInput").value.trim();
+      const resultsList = document.getElementById("resultsList");
+      resultsList.innerHTML = "";
+
+      if (!input) {
+        resultsList.innerHTML = "<li class='text-gray-500'>Entrez un mot-clé.</li>";
+        return;
+      }
+
+      fetch(`recherche.php?q=${encodeURIComponent(input)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.length === 0) {
+            resultsList.innerHTML = "<li class='text-gray-500'>Aucun résultat trouvé.</li>";
+            return;
+          }
+
+          data.forEach(item => {
+            const li = document.createElement("li");
+            const label = `${item.objet_type} – Salle : ${item.nom_salle || 'N/A'}`;
+            const targetUrl = `index.html#${item.objet_type.toLowerCase()}-${item.id || item.id_tv_connectee || item.id_lumiere_connectee || item.id_chauffage_connecte || ''}`;
+            
+            li.innerHTML = `<a href="${targetUrl}" class="block p-3 bg-white rounded shadow hover:bg-gray-100 transition">
+              🔧 ${label}
+            </a>`;
+            resultsList.appendChild(li);
+          });
+        })
+        .catch(() => {
+          resultsList.innerHTML = "<li class='text-red-500'>Erreur lors de la recherche.</li>";
+        });
+    }
+  </script>
+
+  <style>
+    .btn-epure {
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      background-color: #4CAF50;
+    }
+
+    .btn-epure:hover {
+      opacity: 0.8;
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gestion Utilisateur</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header><h1>Ajouter ou Supprimer un Utilisateur</h1></header>
+
+<h2>Ajouter un Utilisateur</h2>
+<form method="POST" action="ajouter_supprimer.php">
+  <label>Pseudonyme :</label>
+  <input type="text" name="pseudonyme" required>
+
+  <label>Âge :</label>
+  <input type="number" name="age" required>
+
+  <label>Genre :</label>
+  <select name="gender" required>
+    <option value="Homme">Homme</option>
+    <option value="Femme">Femme</option>
+    <option value="Autre">Autre</option>
+  </select>
+
+  <label>Date de Naissance :</label>
+  <input type="date" name="dateNaissance" required>
+
+  <label>Avatar (URL ou nom fichier) :</label>
+  <input type="text" name="avatar" required>
+
+  <label>Email :</label>
+  <input type="email" name="email" required>
+
+  <label>Nom :</label>
+  <input type="text" name="last_name" required>
+
+  <label>Prénom :</label>
+  <input type="text" name="first_name" required>
+
+  <label>Mot de passe :</label>
+  <input type="password" name="mot_de_passe" required>
+
+  <label>Points :</label>
+  <input type="number" name="points" value="0" min="0">
+
+  <label>Code de validation (optionnel) :</label>
+  <input type="text" name="code_validation">
+
+  <label>Vérifié :</label>
+  <input type="checkbox" name="verifie">
+
+  <label>Role :</label>
+  <select name="role" required>
+    <option value="admin">Admin</option>
+    <option value="connecte">Utilisateur</option>
+    <option value="intermediaire">Enfant</option>
+    <option value="avanceps">Voisin</option>
+  </select>
+
+  <label>Statut :</label>
+  <select name="statut" required>
+    <option value="enfant">Admin</option>
+    <option value="adulte">Utilisateur</option>
+    <option value="parent">Enfant</option>
+    <option value="voisin">Voisin</option>
+  </select>
+
+  <button type="submit" name="ajouter">Ajouter</button>
+</form>
+
+<h2>Supprimer un Utilisateur</h2>
+<form method="GET" action="ajouter_supprimer.php">
+  <label>ID utilisateur à supprimer :</label>
+  <input type="number" name="supprimer_id" required>
+  <button type="submit">Supprimer</button>
+</form>
+
+<footer>
+  <p>&copy; 2025 Maison Design - Gestion Utilisateurs</p>
+</footer>
+
+</body>
+</html>

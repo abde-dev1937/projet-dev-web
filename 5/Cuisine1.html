@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Bienvenue dans la cuisine !</title>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fdf8f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header, footer {
+      text-align: center;
+      padding: 20px;
+      background: #fff8f0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      color: #a0522d;
+    }
+
+    .main-container {
+      display: flex;
+      flex-wrap: wrap;
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      gap: 20px;
+    }
+
+    .menu-gauche {
+      flex: 1 1 250px;
+      background: #fffaf5;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .menu-gauche label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .menu-gauche select, .menu-gauche button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    .contenu-droite {
+      flex: 2 1 600px;
+      background: #fffaf5;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .section {
+      background: #ffffff;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 5px solid #d2691e;
+    }
+
+    .section h2 {
+      margin-top: 0;
+      color: #d2691e;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+    }
+
+    button {
+      background-color: #d2691e;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #a0522d;
+    }
+  </style>
+</head>
+<body>
+  <body class="bg-gray-100">
+
+    <!-- Bandeau de navigation -->
+    <div class="header bg-gray-800 text-white p-4 text-center">
+        <a href="pageAccueilDev.html" class="text-white">Retour à l'accueil</a> | 
+        <a href="connexion.html" class="text-white">Connexion</a> | 
+        <a href="inscription.html" class="text-white">Inscription</a>
+    </div>
+  <header>
+    <h1 class="text-center text-3xl font-bold mt-4">Bienvenue dans la cuisine !</h1>
+  </header>
+
+  <div class="main-container">
+    <div class="menu-gauche">
+      <label for="plats">Plats :</label>
+      <select id="plats" onchange="afficherPlat()">
+        <option value="default">-- Choisissez un plat --</option>
+        <option value="spaghetti">Spaghetti Bolognaise</option>
+        <option value="steak">Steak Frites</option>
+        <option value="ratatouille">Ratatouille</option>
+        <option value="couscous">Couscous</option>
+        <option value="tartiflette">Tartiflette</option>
+      </select>
+
+      <label for="appareils">Appareils connectés :</label>
+      <select id="appareils" onchange="afficherActions()">
+        <option value="default">-- Choisissez un appareil --</option>
+        <option value="airfryer">Airfryer</option>
+        <option value="four">Four</option>
+        <option value="refrigerateur">Réfrigérateur</option>
+      </select>
+
+      <div id="actions"></div>
+    </div>
+
+    <div class="contenu-droite">
+      <div class="section" id="ingredients">
+        <h2>Ingrédients</h2>
+        <p>Veuillez sélectionner un plat.</p>
+      </div>
+      <div class="section" id="recette">
+        <h2>Recette</h2>
+        <p>Une description du plat apparaîtra ici.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Maison Groupe 3</p>
+  </footer>
+
+  <script>
+      const dataPlats = {
+    spaghetti: {
+      ingredients: ["Pâtes", "Viande hachée", "Tomates", "Oignons", "Ail", "Huile d'olive", "Sel", "Poivre"],
+      recette: ["Préparer les ingrédients", "Faire revenir les oignons et l’ail", "Cuire la viande", "Ajouter les tomates", "Cuire les pâtes et servir"]
+    },
+    ratatouille: {
+      ingredients: ["Aubergines", "Courgettes", "Poivrons", "Tomates", "Oignons", "Ail", "Herbes de Provence", "Huile d'olive"],
+      recette: ["Couper les légumes en morceaux", "Faire revenir les oignons et l’ail", "Ajouter les légumes et laisser mijoter", "Assaisonner et servir"]
+    },
+    steak: {
+      ingredients: ["Steak de bœuf", "Pommes de terre", "Beurre", "Sel", "Poivre", "Huile d'olive"],
+      recette: ["Éplucher et couper les pommes de terre", "Faire cuire les frites dans l'huile", "Cuire le steak selon la cuisson désirée", "Servir chaud"]
+    },
+    couscous: {
+      ingredients: ["Semoule de blé", "Légumes (carottes, courgettes, navets)", "Viande (agneau ou poulet)", "Pois chiches", "Épices (ras el hanout, curcuma, paprika)", "Huile d'olive"],
+      recette: ["Préparer la semoule", "Faire revenir la viande avec les épices", "Ajouter les légumes et laisser mijoter", "Servir avec la semoule"]
+    },
+    tartiflette: {
+      ingredients: ["Pommes de terre", "Lardons", "Oignons", "Crème fraîche", "Reblochon", "Sel", "Poivre"],
+      recette: ["Éplucher et couper les pommes de terre", "Faire revenir les oignons et lardons", "Alterner couches de pommes de terre et fromage dans un plat", "Enfourner à 200°C jusqu’à gratinage"]
+    }
+  };
+
+
+
+
+    function afficherPlat() {
+      const plat = document.getElementById("plats").value;
+      const ingredientsDiv = document.getElementById("ingredients");
+      const recetteDiv = document.getElementById("recette");
+
+      if (plat === "default") {
+        ingredientsDiv.innerHTML = "<h2>Ingrédients</h2><p>Veuillez sélectionner un plat.</p>";
+        recetteDiv.innerHTML = "<h2>Recette</h2><p>Une description du plat apparaîtra ici.</p>";
+      } else {
+        const ingList = dataPlats[plat].ingredients.map(item => `<li>${item}</li>`).join("");
+        const stepsList = dataPlats[plat].recette.map(step => `<li>${step}</li>`).join("");
+        ingredientsDiv.innerHTML = `<h2>Ingrédients</h2><ul>${ingList}</ul>`;
+        recetteDiv.innerHTML = `<h2>Recette</h2><ol>${stepsList}</ol>`;
+      }
+    }
+
+    function afficherActions() {
+      const appareil = document.getElementById("appareils").value;
+      const actionsDiv = document.getElementById("actions");
+
+      let actions = {
+        airfryer: ["Préchauffer (200°C)", "Démarrer cuisson", "Arrêter"],
+        four: ["Préchauffer (180°C)", "Cuisson (30 min)", "Éteindre"],
+        refrigerateur: ["Régler température (4°C)", "Mode éco", "Dégivrage auto"]
+      };
+
+      if (appareil === "default") {
+        actionsDiv.innerHTML = "";
+      } else {
+        actionsDiv.innerHTML = actions[appareil].map(action => `<button onclick="executerAction('${action}')">${action}</button>`).join("<br>");
+      }
+    }
+
+    function executerAction(action) {
+      alert("Action exécutée : " + action);
+    }
+  </script>
+</body>
+</html>

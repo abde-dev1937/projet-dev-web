@@ -1,0 +1,22 @@
+{
+    "projecteur": {
+        "points": 10,
+        "status": "actif",
+        "role": "admin"
+    },
+    "aspirateur": {
+        "points": 11,
+        "status": "inactif",
+        "role": "admin"
+    },
+    "seche_linge": {
+        "points": 11,
+        "status": "actif",
+        "role": "utilisateur"
+    },
+    "seche_linge22": {
+        "points": 111,
+        "status": "inactif",
+        "role": "utilisateur"
+    }
+}
