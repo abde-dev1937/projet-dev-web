@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Statistiques des Objets</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* Style général */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7fafc;
+    }
+
+    .header {
+      background-color: #F44336;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 20px;
+    }
+
+    .device-card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 10px;
+      width: 200px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .device-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .device-card h4 {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #F44336;
+    }
+
+    .device-card p {
+      color: #555;
+      font-size: 1rem;
+    }
+
+    .device-card .stats-btn {
+      background-color: #F44336;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .device-card .stats-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    /* Modale */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .modal-header {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .modal-body {
+      margin-bottom: 20px;
+    }
+
+    .modal-footer {
+      text-align: right;
+    }
+
+    .close-btn {
+      background-color: #F44336;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background-color: #d32f2f;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    Statistiques des Objets
+  </div>
+
+  <div class="container">
+    <!-- Exemple de cartes d'appareils -->
+    <div class="device-card" data-device="thermostat1">
+      <h4>Thermostat 1</h4>
+      <p>Temp actuelle: 22°C</p>
+      <p>Batterie: 80%</p>
+      <button class="stats-btn">Voir les statistiques</button>
+    </div>
+
+    <div class="device-card" data-device="thermostat2">
+      <h4>Thermostat 2</h4>
+      <p>Temp actuelle: 18°C</p>
+      <p>Batterie: 65%</p>
+      <button class="stats-btn">Voir les statistiques</button>
+    </div>
+
+    <!-- Ajoutez d'autres objets ici -->
+  </div>
+
+  <!-- Modale pour afficher les statistiques -->
+  <div id="stats-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header" id="modal-header">
+        Statistiques pour Thermostat 1
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Les statistiques de l'objet vont être affichées ici -->
+      </div>
+      <div class="modal-footer">
+        <button class="close-btn" onclick="closeModal()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Ouvrir la modale avec les statistiques d'un appareil
+    function openModal(deviceName) {
+      const modal = document.getElementById('stats-modal');
+      const header = document.getElementById('modal-header');
+      const body = document.getElementById('modal-body');
+
+      // Modifier l'en-tête de la modale
+      header.textContent = `Statistiques pour ${deviceName}`;
+
+      // Remplir le corps de la modale avec des statistiques (à adapter avec des données dynamiques)
+      body.innerHTML = `
+        <p><strong>Dernière Interaction:</strong> 2025-04-07 18:30</p>
+        <p><strong>Consommation d'énergie:</strong> 200 kWh</p>
+        <p><strong>Temps d'utilisation:</strong> 120 heures</p>
+        <p><strong>Mode:</strong> Éco</p>
+      `;
+
+      // Afficher la modale
+      modal.style.display = 'flex';
+    }
+
+    // Fermer la modale
+    function closeModal() {
+      document.getElementById('stats-modal').style.display = 'none';
+    }
+
+    // Ajouter un événement aux boutons de statistiques
+    document.querySelectorAll('.stats-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const deviceName = this.closest('.device-card').querySelector('h4').textContent;
+        openModal(deviceName);
+      });
+    });
+  </script>
+
+</body>
+</html>

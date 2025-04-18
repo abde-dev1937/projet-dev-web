@@ -1,0 +1,57 @@
+{
+    "console": {
+        "timer": true,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "volume",
+                "inputType": "number",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_volume"
+                ]
+            },
+            {
+                "name": "par",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_par"
+                ]
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    }
+}

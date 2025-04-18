@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salon - Appareils</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .btn-epure {
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .btn-epure:hover { opacity: 0.8; }
+    .btn-green { background-color: #4CAF50; }
+    .btn-red { background-color: #F44336; }
+    .btn-yellow { background-color: #FFEB3B; }
+
+    .container { display: flex; height: 80vh; }
+
+    .device-list {
+      width: 30%;
+      padding: 20px;
+      border-right: 2px solid #F44336;
+      overflow-y: auto;
+    }
+
+    .device-details {
+      width: 70%;
+      padding: 20px;
+      border-left: 2px solid #F44336;
+      overflow-y: auto;
+    }
+
+    .device-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid #F44336;
+    }
+
+    .device-item:hover { background-color: #ddd; }
+
+    h3 { color: #F44336; }
+
+    .device-card {
+      background-color: white;
+      border: 1px solid #F44336;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .device-card .delete-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Style pour la modale */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 50%;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+  <!-- Bandeau de navigation -->
+  <div class="header bg-gray-800 text-white p-4 text-center">
+    <a href="pageAccueilDev.html" class="text-white">Retour à l'accueil</a> | 
+    <a href="connexion.html" class="text-white">Connexion</a> | 
+    <a href="inscription.html" class="text-white">Inscription</a>
+  </div>
+
+  <header>
+    <h1 class="text-center text-3xl font-bold mt-4" style="color: #F44336;">Bienvenue dans le Salon !</h1>
+  </header>
+
+  <div class="container">
+    <!-- Liste des appareils à gauche -->
+    <div class="device-list">
+      <h3 class="text-2xl font-bold mb-4">Liste des appareils</h3>
+      <div id="device-list"></div>
+      
+      <!-- Bouton pour ajouter un appareil -->
+      <button onclick="openModal()" class="btn-epure btn-yellow mt-5">Ajouter un appareil</button>
+    </div>
+
+    <!-- Affichage des appareils à droite -->
+    <div class="device-details">
+      <h3 class="text-2xl font-bold mb-4">Appareils Affichés</h3>
+      <div id="device-cards" class="grid grid-cols-2 gap-4"></div>
+      <div id="error-message" class="text-red-600 mt-4"></div>
+    </div>
+  </div>
+
+  <!-- Modale pour ajouter un appareil -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>Ajouter un nouvel appareil</h2>
+      <form id="addDeviceForm">
+        <label for="device-name">Nom de l'appareil:</label>
+        <input type="text" id="device-name" name="device-name" required><br><br>
+
+        <label for="device-type">Type d'appareil:</label>
+        <select id="device-type" name="device-type" required>
+          <option value="tv">Télévision</option>
+          <option value="chauffage">Chauffage</option>
+          <option value="lumiere">Lumière</option>
+          <option value="enceinte">Enceinte</option>
+          <option value="aspirateur">Aspirateur</option>
+          <option value="ampoule">Ampoule</option>
+          <option value="seche-linge">Sèche-linge</option>
+          <option value="lave-vaisselle">Lave-vaisselle</option>
+          <option value="tondeuse">Tondeuse</option>
+          <option value="tv-connectee">TV Connectée</option>
+          <option value="alexa">Alexa/Google Home</option>
+          <option value="plaque-chauffante">Plaque chauffante</option>
+        </select><br><br>
+
+        <label for="device-room">Salle:</label>
+        <input type="text" id="device-room" name="device-room" required><br><br>
+
+        <button type="submit" class="btn-epure btn-green">Ajouter l'appareil</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let devices = {}; // Liste vide au départ, ajouter les appareils manuellement via formulaire
+
+    // Charger la liste des appareils à droite
+    function loadDeviceList() {
+      const deviceCards = document.getElementById("device-cards");
+      deviceCards.innerHTML = ""; // Vider les cartes actuelles
+
+      // Pour chaque appareil dans l'objet devices, créer une carte
+      for (const deviceKey in devices) {
+        const device = devices[deviceKey];
+        const card = document.createElement("div");
+        card.classList.add("device-card");
+
+        // Contenu de la carte
+        let html = `<h4 class="text-xl font-bold mb-2 text-red-600">${device.name}</h4>`;
+        html += `<p>Type: ${device.type}</p>`;
+        html += `<p>Consommation: ${device.consumption}</p>`;
+
+        // Ajouter les contrôles pour chaque appareil
+        if (device.volume !== undefined) {
+          html += `
+            <label>Volume:</label>
+            <input type="range" min="0" max="100" value="${device.volume}" onchange="changeVolume('${deviceKey}', this.value)" />
+          `;
+        }
+
+        if (device.temperature !== undefined) {
+          html += `
+            <label>Température:</label>
+            <input type="range" min="10" max="30" value="${device.temperature}" onchange="changeTemperature('${deviceKey}', this.value)" />
+          `;
+        }
+
+        html += `
+          <button class="btn-epure btn-red mt-2" onclick="toggleDevice('${deviceKey}')">Marche/Arrêt</button>
+          <span class="delete-btn" onclick="removeDevice('${deviceKey}')">&times;</span>
+        `;
+        
+        card.innerHTML = html;
+        deviceCards.appendChild(card);
+      }
+    }
+
+    // Fonction pour ajouter un appareil manuellement
+    document.getElementById('addDeviceForm').onsubmit = function(event) {
+      event.preventDefault();
+      const name = document.getElementById('device-name').value;
+      const type = document.getElementById('device-type').value;
+      const room = document.getElementById('device-room').value;
+
+      const newDeviceKey = `${type}-${Date.now()}`;
+      devices[newDeviceKey] = {
+        name,
+        type,
+        room,
+        status: 'Off',
+        consumption: '100W',
+        volume: type === 'tv' ? 50 : undefined,
+        temperature: type === 'chauffage' ? 22 : undefined,
+      };
+
+      loadDeviceList(); // Recharger la liste après ajout
+      closeModal(); // Fermer la modale
+    };
+
+    // Fonction pour changer le volume
+    function changeVolume(deviceKey, value) {
+      devices[deviceKey].volume = value;
+      alert("Volume mis à jour à " + value);
+    }
+
+    // Fonction pour changer la température
+    function changeTemperature(deviceKey, value) {
+      devices[deviceKey].temperature = value;
+      alert("Température modifiée à " + value);
+    }
+
+    // Fonction pour changer l'état de l'appareil
+    function toggleDevice(deviceKey) {
+      const device = devices[deviceKey];
+      device.status = device.status === 'Off' ? 'On' : 'Off';
+      alert("État changé à " + device.status);
+    }
+
+    // Fonction pour supprimer un appareil
+    function removeDevice(deviceKey) {
+      delete devices[deviceKey];
+      loadDeviceList(); // Recharger la liste après suppression
+    }
+
+    // Ouvrir la modale
+    function openModal() {
+      document.getElementById('myModal').style.display = "block";
+    }
+
+    // Fermer la modale
+    function closeModal() {
+      document.getElementById('myModal').style.display = "none";
+    }
+
+    // Charger la liste des appareils au début
+    window.onload = loadDeviceList;
+  </script>
+</body>
+</html>

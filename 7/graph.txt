@@ -1,0 +1,34 @@
+SELECT u.nom, 
+       SUM(TIMESTAMPDIFF(SECOND, h.timestamp, h.timestamp2) / 3600 * o.conso_en) AS conso_totale
+FROM historique h
+JOIN utilisateur u ON u.id_user = h.id_user
+JOIN (
+    SELECT 'tv' AS type, id_tv AS id, conso_en FROM tv
+    UNION
+    SELECT 'chauffage', id_chauffage, conso_en FROM chauffage
+    UNION
+    SELECT 'lumiere', id_lumiere, conso_en FROM lumiere
+    -- ajoute toutes les tables d’objets ici
+) o ON CONCAT(h.type_objet, '-', o.id) = h.id_objet AND h.type_objet = o.type
+WHERE h.timestamp2 IS NOT NULL
+GROUP BY u.nom
+
+
+SELECT type_objet, COUNT(*) as nb_actions
+FROM historique
+GROUP BY type_objet
+
+
+SELECT id_objet, COUNT(*) AS nb_actions
+FROM historique
+GROUP BY id_objet
+ORDER BY nb_actions DESC
+LIMIT 10
+
+
+SELECT type_objet,
+       AVG(TIMESTAMPDIFF(SECOND, timestamp, timestamp2)) / 60 AS duree_moy_min
+FROM historique
+WHERE timestamp2 IS NOT NULL
+GROUP BY type_objet
+

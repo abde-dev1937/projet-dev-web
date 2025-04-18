@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Statistiques des objets</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Ton style repris */
+    .btn-epure {
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+
+    .btn-epure:hover { opacity: 0.8; }
+    .btn-green { background-color: #4CAF50; }
+    .btn-red { background-color: #F44336; }
+    .btn-yellow { background-color: #FFEB3B; color: black; }
+
+    .tab-menu {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      border: 1px solid #F44336;
+      border-radius: 10px;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background-color: #F44336;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h2 { color: #F44336; }
+  </style>
+</head>
+<body>
+  <div class="container" style="flex-direction: column;">
+    <h1 style="color:#F44336;">📊 Statistiques</h1>
+
+    <div class="tab-menu">
+      <div class="tab active" onclick="showTab(0)">Par Type</div>
+      <div class="tab" onclick="showTab(1)">Par Utilisateur</div>
+      <div class="tab" onclick="showTab(2)">Par Salle</div>
+    </div>
+
+    <!-- Onglet 1 -->
+    <div class="tab-content active" id="tab-0">
+      <h2>Statistiques par Type d'objet</h2>
+      <div class="chart-container">
+        <canvas id="actionsChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <canvas id="energyChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <canvas id="userChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Onglet 2 -->
+    <div class="tab-content" id="tab-1">
+      <h2>À venir : Statistiques par Utilisateur</h2>
+    </div>
+
+    <!-- Onglet 3 -->
+    <div class="tab-content" id="tab-2">
+      <h2>À venir : Statistiques par Salle</h2>
+    </div>
+  </div>
+
+  <script>
+    function showTab(index) {
+      document.querySelectorAll('.tab').forEach((t, i) => {
+        t.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.tab-content').forEach((c, i) => {
+        c.classList.toggle('active', i === index);
+      });
+    }
+
+    async function fetchStats() {
+      const res = await fetch('get_stats.php'); // Crée ce fichier pour retourner tes stats depuis la table `historique`
+      const data = await res.json();
+
+      const actionCounts = {};
+      const energyByType = {};
+      const userActivity = {};
+
+      data.forEach(row => {
+        const type = row.type_objet;
+        const action = row.action;
+        const user = row.id_user;
+        const valeur = parseInt(row.valeur) || 0;
+
+        // Actions
+        if (!actionCounts[type]) actionCounts[type] = {};
+        actionCounts[type][action] = (actionCounts[type][action] || 0) + 1;
+
+        // Energie
+        energyByType[type] = (energyByType[type] || 0) + valeur;
+
+        // Utilisateurs actifs
+        if (!userActivity[type]) userActivity[type] = {};
+        userActivity[type][user] = (userActivity[type][user] || 0) + 1;
+      });
+
+      // Exemple pour type "console"
+      createBarChart('actionsChart', actionCounts["console"], "Actions (console)");
+      createBarChart('energyChart', { "console": energyByType["console"] || 0 }, "Énergie (valeurs)");
+      createBarChart('userChart', userActivity["console"], "Utilisation par utilisateur (console)");
+    }
+
+    function createBarChart(canvasId, data, label) {
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(data || {}),
+          datasets: [{
+            label: label,
+            data: Object.values(data || {}),
+            backgroundColor: '#F44336'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }
+      });
+    }
+
+    fetchStats();
+  </script>
+</body>
+</html>
