@@ -1,0 +1,10 @@
+{
+    "console": {
+        "points": 120,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado"
+        ]
+    }
+}

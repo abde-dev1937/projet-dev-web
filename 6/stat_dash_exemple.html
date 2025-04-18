@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Statistiques - Filtrable</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-indigo-600 text-white py-6 shadow">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl font-bold">Tableau de Bord - Statistiques Dynamiques</h1>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 py-10 space-y-10">
+    <!-- Filtres -->
+    <div class="flex gap-4">
+      <label for="filtre" class="text-lg font-semibold">Filtrer par :</label>
+      <select id="filtre" class="p-2 border rounded bg-white shadow">
+        <option value="utilisateur">Utilisateur</option>
+        <option value="objet">Objet</option>
+        <option value="energie">Consommation d'énergie</option>
+      </select>
+    </div>
+
+    <!-- Graphiques -->
+    <div id="graphs-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <!-- Graphiques injectés dynamiquement ici -->
+    </div>
+  </main>
+
+  <script>
+    const dataSets = {
+      utilisateur: [
+        {
+          title: "Activité par Utilisateur",
+          type: "bar",
+          labels: ["Alice", "Bob", "Chloé", "David"],
+          data: [20, 30, 15, 35]
+        },
+        {
+          title: "Conso Moyenne / Utilisateur",
+          type: "line",
+          labels: ["Alice", "Bob", "Chloé", "David"],
+          data: [100, 80, 60, 120]
+        },
+        {
+          title: "Actions / Utilisateur",
+          type: "pie",
+          labels: ["Alice", "Bob", "Chloé", "David"],
+          data: [40, 25, 10, 25]
+        }
+      ],
+      objet: [
+        {
+          title: "Utilisation par Objet",
+          type: "bar",
+          labels: ["TV", "Lampe", "PC", "Frigo"],
+          data: [12, 18, 6, 8]
+        },
+        {
+          title: "Types d’objet",
+          type: "doughnut",
+          labels: ["Éclairage", "Divertissement", "Électroménager"],
+          data: [20, 15, 10]
+        },
+        {
+          title: "Conso par Objet",
+          type: "line",
+          labels: ["TV", "Lampe", "PC", "Frigo"],
+          data: [120, 40, 90, 200]
+        }
+      ],
+      energie: [
+        {
+          title: "Énergie utilisée",
+          type: "pie",
+          labels: ["Électrique", "Gaz", "Eau"],
+          data: [60, 25, 15]
+        },
+        {
+          title: "Conso Mensuelle",
+          type: "bar",
+          labels: ["Jan", "Fév", "Mar", "Avr"],
+          data: [200, 180, 220, 210]
+        },
+        {
+          title: "Conso par Heure",
+          type: "line",
+          labels: ["8h", "12h", "16h", "20h"],
+          data: [30, 45, 35, 50]
+        }
+      ]
+    };
+
+    function createChartBlock(canvasId, title, labels, data, type) {
+      const container = document.createElement("div");
+      container.className = "bg-white p-4 rounded shadow";
+
+      const heading = document.createElement("h2");
+      heading.className = "text-lg font-semibold mb-2";
+      heading.textContent = title;
+
+      const canvas = document.createElement("canvas");
+      canvas.id = canvasId;
+
+      container.appendChild(heading);
+      container.appendChild(canvas);
+      document.getElementById("graphs-container").appendChild(container);
+
+      new Chart(canvas, {
+        type: type,
+        data: {
+          labels: labels,
+          datasets: [{
+            label: title,
+            data: data,
+            backgroundColor: ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#3b82f6', '#a855f7'],
+            borderColor: '#1f2937',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: type !== "bar" ? true : false }
+          }
+        }
+      });
+    }
+
+    function renderGraphs(category) {
+      const container = document.getElementById("graphs-container");
+      container.innerHTML = "";
+      const graphs = dataSets[category];
+      graphs.forEach((graph, index) => {
+        createChartBlock(`${category}-chart-${index}`, graph.title, graph.labels, graph.data, graph.type);
+      });
+    }
+
+    // Initial load
+    document.getElementById("filtre").addEventListener("change", (e) => {
+      renderGraphs(e.target.value);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderGraphs("utilisateur");
+    });
+  </script>
+</body>
+</html>

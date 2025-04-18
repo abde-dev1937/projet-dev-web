@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salon - Appareils</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .btn-epure {
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    .btn-epure:hover { opacity: 0.8; }
+    .btn-green { background-color: #4CAF50; }
+    .container {
+      display: flex;
+      height: 80vh;
+    }
+
+    .device-list {
+      width: 30%;
+      padding: 20px;
+      border-right: 2px solid #4CAF50;
+    }
+
+    .device-details {
+      width: 70%;
+      padding: 20px;
+      border-left: 2px solid #4CAF50;
+    }
+
+    .device-item {
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid #4CAF50;
+    }
+
+    .device-item:hover {
+      background-color: #e0f5e0;
+    }
+
+    h3, h1 {
+      color: #4CAF50;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="header bg-gray-800 text-white p-4 text-center">
+    <a href="pageAccueilDev.html" class="text-white">Retour à l'accueil</a> |
+    <a href="connexion.html" class="text-white">Connexion</a> |
+    <a href="inscription.html" class="text-white">Inscription</a>
+  </div>
+
+  <header>
+    <h1 class="text-center text-3xl font-bold mt-4">Bienvenue dans le Salon !</h1>
+  </header>
+
+  <div class="container">
+    <div class="device-list">
+      <h3 class="text-2xl font-bold mb-4">Appareils</h3>
+      <div id="device-list">
+        <div class="device-item" onclick="showDeviceDetails('tondeuse')">Tondeuse Électrique</div>
+        <div class="device-item" onclick="showDeviceDetails('portail')">Portail Électrique</div>
+      </div>
+    </div>
+
+    <div class="device-details">
+      <h3 id="device-name" class="text-2xl font-bold">Sélectionner un appareil</h3>
+      <div id="device-info">
+        <p>Veuillez sélectionner un appareil pour voir ses informations.</p>
+      </div>
+      <div id="device-actions" class="mt-4"></div>
+      <div id="error-message" class="text-red-600 mt-2"></div>
+    </div>
+  </div>
+
+  <script>
+    let tondeuseInterval = null;
+    let portailTimeout = null;
+    let isConnected = true;
+
+    const devices = {
+      tondeuse: {
+        name: "Tondeuse Électrique Autonome",
+        type: "Jardinage",
+        consumption: "1200W",
+        status: "Off",
+        timeLeft: 0
+      },
+      portail: {
+        name: "Portail Électrique",
+        type: "Extérieur",
+        consumption: "300W",
+        status: "Fermé",
+        maintienOuvert: false
+      }
+    };
+
+    function showDeviceDetails(deviceKey) {
+      const device = devices[deviceKey];
+      document.getElementById("device-name").innerText = device.name;
+      let deviceInfoHtml = `
+        <p>Type: ${device.type}</p>
+        <p>Consommation: ${device.consumption}</p>
+        <p>Statut: ${device.status}</p>
+      `;
+
+      let deviceActionsHtml = "";
+
+      if (deviceKey === "tondeuse") {
+        deviceActionsHtml += `
+          <div>
+            <label for="tondeuse-time">Durée (minutes):</label>
+            <input type="number" id="tondeuse-time" min="1" value="10" class="ml-2 p-1 border rounded">
+          </div>
+          <button class="btn-epure btn-green" onclick="startTondeuse('${deviceKey}')">Lancer la tonte</button>
+          <button class="btn-epure btn-green" onclick="stopTondeuse('${deviceKey}')">Arrêter la tondeuse</button>
+          <div id="tondeuse-timer" class="mt-2 font-semibold"></div>
+        `;
+      }
+
+      if (deviceKey === "portail") {
+        deviceActionsHtml += `
+          <button class="btn-epure btn-green" onclick="ouvrirPortail()">Ouvrir le portail</button>
+          <button class="btn-epure btn-green" onclick="maintenirPortailOuvert()">Maintenir ouvert</button>
+          <button class="btn-epure btn-green" onclick="fermerPortail()">Fermer</button>
+          <div id="portail-status" class="mt-2 font-semibold"></div>
+        `;
+      }
+
+      document.getElementById("device-info").innerHTML = deviceInfoHtml;
+      document.getElementById("device-actions").innerHTML = deviceActionsHtml;
+      document.getElementById("error-message").innerText = "";
+
+      if (deviceKey === "portail") {
+        updatePortailStatus();
+      }
+    }
+
+    function startTondeuse(deviceKey) {
+      if (!isConnected) return displayError();
+      const time = document.getElementById("tondeuse-time").value;
+      devices[deviceKey].timeLeft = time * 60;
+      devices[deviceKey].status = "On";
+      alert("Tondeuse lancée pour " + time + " minutes.");
+      startTimer(deviceKey);
+    }
+
+    function stopTondeuse(deviceKey) {
+      if (!isConnected) return displayError();
+      devices[deviceKey].status = "Off";
+      devices[deviceKey].timeLeft = 0;
+      clearInterval(tondeuseInterval);
+      document.getElementById("tondeuse-timer").innerText = "";
+      alert("Tondeuse arrêtée.");
+    }
+
+    function startTimer(deviceKey) {
+      clearInterval(tondeuseInterval);
+      tondeuseInterval = setInterval(() => {
+        if (devices[deviceKey].timeLeft <= 0) {
+          clearInterval(tondeuseInterval);
+          devices[deviceKey].status = "Off";
+          alert("Tonte terminée.");
+        } else {
+          devices[deviceKey].timeLeft--;
+          document.getElementById("tondeuse-timer").innerText =
+            "Temps restant : " + devices[deviceKey].timeLeft + " secondes";
+        }
+      }, 1000);
+    }
+
+    function ouvrirPortail() {
+      if (!isConnected) return displayError();
+      const portail = devices["portail"];
+      portail.status = "Ouvert";
+      portail.maintienOuvert = false;
+      updatePortailStatus();
+      alert("Portail ouvert.");
+      clearTimeout(portailTimeout);
+      portailTimeout = setTimeout(() => {
+        if (!portail.maintienOuvert) {
+          portail.status = "Fermé";
+          updatePortailStatus();
+          alert("Portail refermé automatiquement.");
+        }
+      }, 5000);
+    }
+
+    function fermerPortail() {
+        if (!isConnected) return displayError();
+        const portail = devices["portail"];
+        portail.status = "Fermé";
+        portail.maintienOuvert = false;
+        clearTimeout(portailTimeout);
+        updatePortailStatus();
+        alert("Portail fermé manuellement.");
+        }
+
+
+    function maintenirPortailOuvert() {
+      if (!isConnected) return displayError();
+      const portail = devices["portail"];
+      portail.status = "Ouvert en continu";
+      portail.maintienOuvert = true;
+      clearTimeout(portailTimeout);
+      updatePortailStatus();
+      alert("Portail maintenu ouvert.");
+    }
+
+    function updatePortailStatus() {
+      document.getElementById("portail-status").innerText =
+        "Statut du portail : " + devices["portail"].status;
+    }
+
+    function displayError() {
+      document.getElementById("error-message").innerText =
+        "Vous devez être connecté pour utiliser les appareils.";
+    }
+  </script>
+</body>
+</html>
