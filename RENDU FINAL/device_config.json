@@ -1,0 +1,272 @@
+{
+    "console": {
+        "timer": true,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "volume",
+                "inputType": "number",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_volume"
+                ]
+            },
+            {
+                "name": "par",
+                "inputType": "number",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_par"
+                ]
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "seche_linge": {
+        "timer": false,
+        "default_room": "cuisine",
+        "fields": [
+            {
+                "name": "mode eco",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_eco"
+                ]
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "cuisine"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "seche_linge22": {
+        "timer": false,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "source_tv",
+                "inputType": "text",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_source"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "téléviseur": {
+        "timer": true,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "chaine",
+                "inputType": "number",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_chaine"
+                ]
+            },
+            {
+                "name": "volume",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_volume"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "alexa": {
+        "timer": true,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "volume",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_volume"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 250
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    }
+}

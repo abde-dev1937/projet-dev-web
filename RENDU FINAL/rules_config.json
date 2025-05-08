@@ -1,0 +1,41 @@
+{
+    "console": {
+        "points": 120,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado"
+        ]
+    },
+    "seche_linge": {
+        "points": 100,
+        "roles": [
+            "adulte"
+        ]
+    },
+    "seche_linge22": {
+        "points": 2,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado",
+            "visiteur"
+        ]
+    },
+    "téléviseur": {
+        "points": 50,
+        "roles": [
+            "adulte",
+            "ado"
+        ]
+    },
+    "alexa": {
+        "points": 25,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado",
+            "visiteur"
+        ]
+    }
+}

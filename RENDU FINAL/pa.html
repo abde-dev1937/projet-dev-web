@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+
+        body {
+            background-image: url('https://www.costas-casas.fr/db/huizen/1676/thumbnails/134224_03.jpg.thumb3.jpg'); /* Remplacez cette URL par votre propre image */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); 
+            z-index: -1; 
+        }
+
+
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .header a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+        /* Boutons */
+        .btn-epure {
+            padding: 12px 24px;
+            border-radius: 30px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-epure:hover {
+            opacity: 0.8;
+        }
+
+        .btn-green { background-color: #4CAF50; }
+        .btn-red { background-color: #F44336; }
+        .btn-orange { background-color: #d2691e; }
+
+        /* Conteneur de la page */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            z-index: 1;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+  <div class="header bg-gray-800 text-white p-4 flex justify-center space-x-8">
+    <a href="login.php" class="text-white hover:underline">Connexion</a>
+    <a href="reg.html" class="text-white hover:underline">Inscription</a>
+    <a href="profil.php" class="text-white hover:underline">Profil</a>
+    <a href="deco.php" class="text-white hover:underline">Déconnexion</a>
+  </div>
+
+  <div class="flex flex-col items-center justify-center text-center p-8 space-y-6">
+    <h2 class="text-4xl font-bold text-white">Bienvenue dans la maison du groupe 3</h2>
+
+    <p class="text-lg max-w-2xl text-white">
+      Vous êtes arrivé sur notre page dédiée aux outils connectés de la maison intelligente.  
+      Ici, vous pouvez explorer les différents appareils disponibles dans chaque pièce et tester leurs fonctionnalités.  
+      Commencez par la cuisine pour découvrir comment ces objets innovants peuvent vous faciliter la vie au quotidien.  
+      Cliquez sur un appareil pour en savoir plus sur son type, sa consommation énergétique, et son utilité dans un foyer connecté !
+    </p>
+
+    <div class="flex flex-wrap justify-center gap-4">
+      <button class="btn-epure btn-green" onclick="window.location.href='jardin.php'">Jardin</button>
+      <button class="btn-epure btn-red" onclick="window.location.href='salon.php'">Salon</button>
+      <button class="btn-epure btn-orange" onclick="window.location.href='cuisine.php'">Cuisine</button>
+      <button class="btn-epure btn-blue" style="font-size: 18px; padding: 14px 28px; background-color: #1E90FF;" onclick="window.location.href='recherche.html'">
+        🔍 Recherche
+      </button>
+<button class="btn-epure btn-blue"
+        style="font-size: 18px; padding: 14px 28px; background-color: #1E90FF;"
+        onclick="window.location.href='stats.html'">
+  📊 Stats
+</button>
+    </div>
+  </div>
+
+</body>
+
+</html>

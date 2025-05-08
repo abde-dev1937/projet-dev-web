@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Statistiques - Appareils</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+ <style>
+  .chart-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 400px; 
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+</style>
+
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="header bg-gray-800 text-white p-4 text-center">
+    <a href="pageAccueilDev.html" class="text-white">Accueil</a> | 
+    <a href="salon.html" class="text-white">Salon</a>
+  </div>
+
+  <header class="text-center my-6">
+    <h1 class="text-3xl font-bold" style="color: #F44336;">Statistiques d'utilisation par type d’objet</h1>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4">
+
+
+    <div class="my-4 text-center">
+      <label for="objectSelect" class="mr-2">Choisir un objet :</label>
+      <select id="objectSelect" class="p-2 border rounded"></select>
+    </div>
+
+    <div class="chart-container">
+      <h2 class="text-xl font-semibold mb-2">📊 Nombre d'activations</h2>
+      <canvas id="activationsChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h2 class="text-xl font-semibold mb-2">⚡ Consommation d’énergie (total estimé en kWh)</h2>
+      <canvas id="energyChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h2 class="text-xl font-semibold mb-2">🥧 Répartition d’utilisation par utilisateur</h2>
+      <canvas id="userChart"></canvas>
+
+    </div>
+
+
+  </main>
+
+<script>
+let allStats = [];
+let allObjects = [];
+
+async function fetchStats() {
+  try {
+    const res = await fetch('get_stats.php');
+    const json = await res.json();
+
+    if (!json.success || !Array.isArray(json.data)) {
+      console.error("Données invalides reçues :", json);
+      alert("Erreur dans get_stats.php (structure des données incorrecte)");
+      return false;
+    }
+
+    allStats = json.data;
+    allObjects = [...new Set(allStats.map(stat => stat.id_objet))];
+    return true;
+  } catch (error) {
+    console.error("Erreur lors du chargement des stats :", error);
+    alert("Erreur réseau ou JSON invalide.");
+    return false;
+  }
+}
+
+function renderObjectSelect() {
+  const select = document.getElementById('objectSelect');
+  const ctxActions = document.getElementById('activationsChart');
+  const ctxEnergy = document.getElementById('energyChart');
+  const ctxUsers = document.getElementById('userChart');
+
+  if (!ctxActions || !ctxEnergy || !ctxUsers) {
+    console.error("Un ou plusieurs éléments canvas sont manquants.");
+    return;
+  }
+
+  select.innerHTML = '';
+
+  allObjects.forEach(objId => {
+    const option = document.createElement("option");
+    option.value = objId;
+    option.textContent = objId;
+    select.appendChild(option);
+  });
+
+select.addEventListener('change', () => {
+  const selected = select.value;
+  const stats = allStats.find(s => s.id_objet === selected);
+  if (!stats) return;
+
+  // ===  Chart des actions ===
+  const actionLabels = Object.keys(stats.actions || {});
+  const actionData = Object.values(stats.actions || {});
+if (window.actionChart && typeof window.actionChart.destroy === 'function') {
+  window.actionChart.destroy();
+}
+  window.actionChart = new Chart(ctxActions, {
+    type: 'bar',
+    data: {
+      labels: actionLabels,
+      datasets: [{
+        label: `Actions pour ${stats.nom || selected}`,
+        data: actionData,
+        backgroundColor: '#2196F3'
+      }]
+    },
+    options: { responsive: true }
+  });
+
+  // ===  Graph conso par jour ===
+  const labels = Object.keys(stats.par_jour || {});
+  const values = Object.values(stats.par_jour || {});
+if (window.energyChart && typeof window.energyChart.destroy === 'function') {
+ window.energyChart.destroy();
+}
+  window.energyChart = new Chart(ctxEnergy, {
+    type: 'line',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Consommation par jour',
+        data: values,
+        borderColor: '#4CAF50',
+        backgroundColor: 'rgba(76, 175, 80, 0.2)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        x: {
+          title: { display: true, text: 'Date' },
+          ticks: {
+            autoSkip: true, // 
+            maxTicksLimit: 10
+          }
+        },
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'kWh' }
+        }
+      }
+    }
+  });
+
+  // === Camembert utilisateurs ===
+  const userLabels = Object.keys(stats.utilisateurs || {}).map(id => `Utilisateur ${id}`);
+  const userValues = Object.values(stats.utilisateurs || {});
+
+if (window.userChart && typeof window.userChart.destroy === 'function') {
+  window.userChart.destroy();
+}
+  window.userChart = new Chart(ctxUsers, {
+    type: 'pie',
+    data: {
+      labels: userLabels,
+      datasets: [{
+        data: userValues,
+        backgroundColor: ['#FFC107', '#9C27B0', '#03A9F4', '#E91E63', '#4CAF50']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { position: 'right' }
+      }
+    }
+  });
+});
+
+
+  if (allObjects.length > 0) {
+    select.value = allObjects[0];
+    select.dispatchEvent(new Event('change'));
+  }
+}
+
+
+async function init() {
+  const ok = await fetchStats();
+  if (ok) renderObjectSelect();
+}
+
+init();
+</script>
+
+
+
+
+
+</body>
+</html>
