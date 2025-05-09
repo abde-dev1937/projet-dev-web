@@ -1,0 +1,623 @@
+{
+    "console": {
+        "timer": true,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "volume",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_volume"
+                ]
+            },
+            {
+                "name": "source",
+                "inputType": "number",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_source"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 50
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "tv": {
+        "timer": false,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "volume",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_volume"
+                ]
+            },
+            {
+                "name": "source",
+                "inputType": "number",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_source"
+                ]
+            },
+            {
+                "name": "couleurs",
+                "inputType": "color",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_couleur"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 40
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "eceinte": {
+        "timer": false,
+        "default_room": "salon",
+        "fields": [
+            {
+                "name": "controle_parental",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_controle"
+                ]
+            },
+            {
+                "name": "volume",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_volume"
+                ]
+            },
+            {
+                "name": "jeu",
+                "inputType": "text",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_jeu"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 65
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "seche_linge": {
+        "timer": true,
+        "default_room": "cuisine",
+        "fields": [
+            {
+                "name": "mode_eco",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_eco"
+                ]
+            },
+            {
+                "name": "mode_fragile",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_fragile"
+                ]
+            },
+            {
+                "name": "couleur",
+                "inputType": "color",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_couleur"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 240
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "cuisine"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "lave_vaisselle": {
+        "timer": true,
+        "default_room": "cuisine",
+        "fields": [
+            {
+                "name": "mode_eco",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_eco"
+                ]
+            },
+            {
+                "name": "temperature",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_temperature"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 260
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "cuisine"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "chauffage": {
+        "timer": true,
+        "default_room": "cuisine",
+        "fields": [
+            {
+                "name": "temperature",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_temperature"
+                ]
+            },
+            {
+                "name": "mode_eco",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_eco"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 50
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "cuisine"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "tondeuse": {
+        "timer": true,
+        "default_room": "jardin",
+        "fields": [
+            {
+                "name": "coupe fine",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_fine"
+                ]
+            },
+            {
+                "name": "coupe large",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_large"
+                ]
+            },
+            {
+                "name": "mode animaux",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_animaux"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 30
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "jardin"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "eclairage": {
+        "timer": false,
+        "default_room": "jardin",
+        "fields": [
+            {
+                "name": "couleur",
+                "inputType": "color",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_couleur"
+                ]
+            },
+            {
+                "name": "mode nocturne",
+                "inputType": "checkbox",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_nocturne"
+                ]
+            },
+            {
+                "name": "intensité",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_intensite"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 20
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "salon"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    },
+    "arrosage": {
+        "timer": true,
+        "default_room": "jardin",
+        "fields": [
+            {
+                "name": "quantite_eau",
+                "inputType": "range",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "changement_quantite"
+                ]
+            },
+            {
+                "name": "mode rotatif",
+                "inputType": "text",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_rotatif"
+                ]
+            },
+            {
+                "name": "mode stable",
+                "inputType": "text",
+                "editable": true,
+                "asked": false,
+                "actions": [
+                    "mode_stable"
+                ]
+            },
+            {
+                "name": "conso_en",
+                "inputType": "number",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": 5
+            },
+            {
+                "name": "nom",
+                "inputType": "text",
+                "editable": true,
+                "asked": true,
+                "actions": [
+                    "changement_nom"
+                ]
+            },
+            {
+                "name": "id_connection",
+                "inputType": "text",
+                "editable": false,
+                "asked": true,
+                "actions": []
+            },
+            {
+                "name": "nom_salle",
+                "inputType": "text",
+                "editable": false,
+                "asked": false,
+                "actions": [],
+                "default": "jardin"
+            },
+            {
+                "name": "fonctionnement",
+                "inputType": "checkbox",
+                "editable": false,
+                "asked": false,
+                "actions": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,70 @@
+{
+    "console": {
+        "points": 120,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado"
+        ]
+    },
+    "tv": {
+        "points": 10,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado"
+        ]
+    },
+    "eceinte": {
+        "points": 20,
+        "roles": [
+            "adulte",
+            "ado",
+            "visiteur"
+        ]
+    },
+    "seche_linge": {
+        "points": 100,
+        "roles": [
+            "adulte"
+        ]
+    },
+    "lave_vaisselle": {
+        "points": 30,
+        "roles": [
+            "enfant",
+            "adulte"
+        ]
+    },
+    "chauffage": {
+        "points": 30,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado",
+            "visiteur"
+        ]
+    },
+    "tondeuse": {
+        "points": 30,
+        "roles": [
+            "enfant",
+            "adulte",
+            "ado",
+            "visiteur"
+        ]
+    },
+    "eclairage": {
+        "points": 60,
+        "roles": [
+            "adulte"
+        ]
+    },
+    "arrosage": {
+        "points": 20,
+        "roles": [
+            "adulte",
+            "ado"
+        ]
+    }
+}
